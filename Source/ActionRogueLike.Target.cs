@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 public class ActionRogueLikeTarget : TargetRules
 {
-	public ActionRogueLikeTarget( TargetInfo Target) : base(Target)
+	public ActionRogueLikeTarget(TargetInfo Target) : base(Target)
 	{
 		Type = TargetType.Game;
 		DefaultBuildSettings = BuildSettingsVersion.V2;
