@@ -3,8 +3,14 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Camera/CameraComponent.h"
 #include "GameFramework/Character.h"
+#include "GameFramework/SpringArmComponent.h"
 #include "SCharacter.generated.h"
+
+
+class UCameraComponent;
+class USpringArmComponent;
 
 UCLASS()
 class ACTIONROGUELIKE_API ASCharacter : public ACharacter
@@ -16,6 +22,14 @@ public:
 	ASCharacter();
 
 protected:
+
+	UPROPERTY(VisibleAnywhere);
+	UCameraComponent* CameraComp;
+
+	UPROPERTY(VisibleAnywhere);
+	USpringArmComponent* SpringArmComp;
+
+	
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
