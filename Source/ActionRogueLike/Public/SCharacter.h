@@ -38,6 +38,7 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	void MoveForward(float value);
+	void MoveRight(float value);
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
