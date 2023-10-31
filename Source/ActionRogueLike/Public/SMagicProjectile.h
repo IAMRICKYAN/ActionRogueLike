@@ -1,4 +1,3 @@
- 
 
 #pragma once
 
@@ -7,7 +6,7 @@
 #include "GameFramework/Actor.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Particles/ParticleSystemComponent.h"
-
+#include "SMagicProjectile.generated.h"
 
 class USphereComponent;
 class UProjectileMovementComponent;
