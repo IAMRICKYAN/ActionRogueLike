@@ -77,6 +77,16 @@ void ASCharacter::PrimaryAttack()
 	GetWorld()->SpawnActor<AActor>(ProjectileClass,SpawnTM,SpawnParams);
 }
 
+void ASCharacter::JumpBegin()
+{
+	bPressedJump = true;
+}
+
+void ASCharacter::JumpEnd()
+{
+	bPressedJump = false;
+}
+
 // Called to bind functionality to input
 void ASCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
@@ -87,6 +97,9 @@ void ASCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 
 	PlayerInputComponent->BindAxis("Turn",this,&APawn::AddControllerYawInput);
 	PlayerInputComponent->BindAxis("LookUp",this,&APawn::AddControllerPitchInput);
+
+	PlayerInputComponent->BindAction("Jump",IE_Pressed,this,&ASCharacter::JumpBegin);
+	PlayerInputComponent->BindAction("Jump",IE_Released,this,&ASCharacter::JumpEnd);
 
 	PlayerInputComponent->BindAction("PrimaryAttack",IE_Pressed,this,&ASCharacter::PrimaryAttack);
 }
