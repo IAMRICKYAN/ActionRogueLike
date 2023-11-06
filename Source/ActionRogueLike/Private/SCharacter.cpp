@@ -3,6 +3,7 @@
 
 #include "SCharacter.h"
 
+#include "SInteractionComponent.h"
 #include "Chaos/ChaosPerfTest.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
@@ -18,6 +19,8 @@ ASCharacter::ASCharacter()
 
 	CameraComp = CreateDefaultSubobject<UCameraComponent>("CameraComp");
 	CameraComp->SetupAttachment(SpringArmComp);
+
+	InteractionComp = CreateDefaultSubobject<USInteractionComponent>("InteractionComp");
 
 
 	GetCharacterMovement()->bOrientRotationToMovement = true;
@@ -77,6 +80,15 @@ void ASCharacter::PrimaryAttack()
 	GetWorld()->SpawnActor<AActor>(ProjectileClass,SpawnTM,SpawnParams);
 }
 
+void ASCharacter::PrimaryInteract()
+{
+	if(InteractionComp)
+	{
+		InteractionComp->PrimaryInteract();
+	}
+	
+}
+
 // Called to bind functionality to input
 void ASCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
@@ -91,5 +103,6 @@ void ASCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 	PlayerInputComponent->BindAction("Jump",IE_Pressed,this,&ACharacter::Jump);
 	
 	PlayerInputComponent->BindAction("PrimaryAttack",IE_Pressed,this,&ASCharacter::PrimaryAttack);
+	PlayerInputComponent->BindAction("PrimaryInteract",IE_Pressed,this,&ASCharacter::PrimaryInteract);
 }
 
