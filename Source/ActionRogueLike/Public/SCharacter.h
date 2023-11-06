@@ -44,8 +44,6 @@ public:
 	void MoveForward(float value);
 	void MoveRight(float value);
 	void PrimaryAttack();
-	void JumpBegin();
-	void JumpEnd();
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
