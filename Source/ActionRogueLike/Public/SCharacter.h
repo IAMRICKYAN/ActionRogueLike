@@ -12,6 +12,7 @@
 class USInteractionComponent;
 class UCameraComponent;
 class USpringArmComponent;
+class UAnimMontage;
 
 UCLASS()
 class ACTIONROGUELIKE_API ASCharacter : public ACharacter
@@ -19,8 +20,15 @@ class ACTIONROGUELIKE_API ASCharacter : public ACharacter
 	GENERATED_BODY()
 
 protected:
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere,Category = "Attack")
 	TSubclassOf<AActor> ProjectileClass;
+
+	UPROPERTY(EditAnywhere,Category = "Attack")
+	UAnimMontage* AttackAnim;
+
+	
+	FTimerHandle TimerHandle_PrimaryAttack;
+
 
 public:
 	// Sets default values for this character's properties
@@ -36,6 +44,8 @@ protected:
 
 	UPROPERTY(VisibleAnywhere)
 	USInteractionComponent* InteractionComp;
+
+	
 	
 	
 	// Called when the game starts or when spawned
@@ -47,6 +57,7 @@ public:
 
 	void MoveForward(float value);
 	void MoveRight(float value);
+	void PrimaryAttack_TimeElasped();
 	void PrimaryAttack();
 	void PrimaryInteract();
 	// Called to bind functionality to input

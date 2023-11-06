@@ -68,16 +68,31 @@ void ASCharacter::MoveRight(float value)
 	AddMovementInput(RightVector,value);
 }
 
+
+
 void ASCharacter::PrimaryAttack()
 {
-	FVector HandLocation = GetMesh()->GetSocketLocation("Muzzle_01");
 	
-	FTransform SpawnTM = FTransform(GetActorRotation(),HandLocation);
+	PlayAnimMontage(AttackAnim);
 
-	FActorSpawnParameters SpawnParams;
-	SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+	GetWorldTimerManager().SetTimer(TimerHandle_PrimaryAttack,this,&ASCharacter::PrimaryAttack_TimeElasped,0.2f);
+
+	//如果我们的角色死了,使用下面语句清理TimerHandle
+	//GetWorldTimerManager().ClearTimer(TimerHandle_PrimaryAttack);
 	
-	GetWorld()->SpawnActor<AActor>(ProjectileClass,SpawnTM,SpawnParams);
+
+}
+
+void ASCharacter::PrimaryAttack_TimeElasped()
+{
+		FVector HandLocation = GetMesh()->GetSocketLocation("Muzzle_01");
+    	
+    	FTransform SpawnTM = FTransform(GetActorRotation(),HandLocation);
+    
+    	FActorSpawnParameters SpawnParams;
+    	SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+    	
+    	GetWorld()->SpawnActor<AActor>(ProjectileClass,SpawnTM,SpawnParams);
 }
 
 void ASCharacter::PrimaryInteract()
