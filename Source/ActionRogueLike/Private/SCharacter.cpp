@@ -81,19 +81,58 @@ void ASCharacter::PrimaryAttack()
 	//GetWorldTimerManager().ClearTimer(TimerHandle_PrimaryAttack);
 	
 
+    	
 }
 
 void ASCharacter::PrimaryAttack_TimeElasped()
 {
-		FVector HandLocation = GetMesh()->GetSocketLocation("Muzzle_01");
-    	
-    	FTransform SpawnTM = FTransform(GetActorRotation(),HandLocation);
+		/*FVector HandLocation = GetMesh()->GetSocketLocation("Muzzle_01");
+
+    	FTransform SpawnTM = FTransform(GetControlRotation(),HandLocation);
     
     	FActorSpawnParameters SpawnParams;
     	SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 		SpawnParams.Instigator = this;
     	
-    	GetWorld()->SpawnActor<AActor>(ProjectileClass,SpawnTM,SpawnParams);
+    	GetWorld()->SpawnActor<AActor>(ProjectileClass,SpawnTM,SpawnParams);*/
+
+		// 获取模型右手位置
+		FVector RightHandLoc = GetMesh()->GetSocketLocation("Muzzle_01");
+ 	
+		// 检测距离为 5000 cm = 50 m
+		FVector TraceStart = CameraComp->GetComponentLocation();
+		FVector TraceEnd = TraceStart + ( GetControlRotation().Vector() * 5000 );
+ 	
+		// 检测半径
+		FCollisionShape Shape;
+		Shape.SetSphere(20.0f);
+ 	
+		// 不要检测自己角色
+		FCollisionQueryParams Params;
+		Params.AddIgnoredActor(this);
+ 	
+		// 碰撞设置
+		FCollisionObjectQueryParams ObjParams;
+		ObjParams.AddObjectTypesToQuery(ECC_WorldStatic);
+		ObjParams.AddObjectTypesToQuery(ECC_WorldDynamic);
+		ObjParams.AddObjectTypesToQuery(ECC_Pawn);
+ 	
+		FHitResult Hit;
+		if (GetWorld()->SweepSingleByObjectType(Hit, TraceStart, TraceEnd, FQuat::Identity, ObjParams, Shape, Params)) {
+			TraceEnd = Hit.ImpactPoint;
+		}
+			
+		// 尾向量 - 头向量 = 方向向量 eg：起点(0,0) 终点(1,1)，方向向量为(1,1)
+		FRotator ProjRotation = FRotationMatrix::MakeFromX(TraceEnd - RightHandLoc).Rotator();
+		// 朝向检测到的落点方向，在角色的右手位置生成
+		FTransform SpawnTM = FTransform(ProjRotation, RightHandLoc);
+ 	
+		// 此处设置碰撞检测规则为：即使碰撞也总是生成
+		FActorSpawnParameters SpawnParams;
+		SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+		SpawnParams.Instigator = this;
+ 	
+		GetWorld()->SpawnActor<AActor>(ProjectileClass, SpawnTM, SpawnParams);
 }
 
 void ASCharacter::PrimaryInteract()
