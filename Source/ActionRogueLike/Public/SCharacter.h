@@ -60,6 +60,7 @@ public:
 	void PrimaryAttack_TimeElasped();
 	void PrimaryAttack();
 	void PrimaryInteract();
+	void SpawnProjectile(TSubclassOf<AActor> ClassToSpawn);
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 

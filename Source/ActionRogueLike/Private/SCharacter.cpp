@@ -96,6 +96,24 @@ void ASCharacter::PrimaryAttack_TimeElasped()
     	
     	GetWorld()->SpawnActor<AActor>(ProjectileClass,SpawnTM,SpawnParams);*/
 
+		SpawnProjectile(ProjectileClass);
+ 	
+		
+}
+
+void ASCharacter::PrimaryInteract()
+{
+	if(InteractionComp)
+	{
+		InteractionComp->PrimaryInteract();
+	}
+	
+}
+
+void ASCharacter::SpawnProjectile(TSubclassOf<AActor> ClassToSpawn)
+{
+	if(ensure(ClassToSpawn))
+	{
 		// 获取模型右手位置
 		FVector RightHandLoc = GetMesh()->GetSocketLocation("Muzzle_01");
  	
@@ -131,16 +149,10 @@ void ASCharacter::PrimaryAttack_TimeElasped()
 		FActorSpawnParameters SpawnParams;
 		SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 		SpawnParams.Instigator = this;
- 	
-		GetWorld()->SpawnActor<AActor>(ProjectileClass, SpawnTM, SpawnParams);
-}
 
-void ASCharacter::PrimaryInteract()
-{
-	if(InteractionComp)
-	{
-		InteractionComp->PrimaryInteract();
+		GetWorld()->SpawnActor<AActor>(ProjectileClass, SpawnTM, SpawnParams);
 	}
+
 	
 }
 
