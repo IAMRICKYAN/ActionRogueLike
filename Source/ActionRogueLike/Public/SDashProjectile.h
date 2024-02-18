@@ -27,7 +27,6 @@ protected:
  
 	UPROPERTY(EditDefaultsOnly, Category = "Teleport")
 	float DetonateDelay; // 爆炸延迟
-
 	
 
  
