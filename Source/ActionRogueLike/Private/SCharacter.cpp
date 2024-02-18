@@ -150,10 +150,30 @@ void ASCharacter::SpawnProjectile(TSubclassOf<AActor> ClassToSpawn)
 		SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 		SpawnParams.Instigator = this;
 
+		/*
 		GetWorld()->SpawnActor<AActor>(ProjectileClass, SpawnTM, SpawnParams);
+		*/
+
+		GetWorld()->SpawnActor<AActor>(ClassToSpawn,SpawnTM,SpawnParams);
 	}
 
 	
+}
+
+void ASCharacter::BlackHoleAttack()
+{
+	
+	PlayAnimMontage(AttackAnim);
+
+	GetWorldTimerManager().SetTimer(TimerHandle_BlackHoleAttack,this,&ASCharacter::BlackHoleAttack_TimeElasped,0.2f);
+
+	//如果我们的角色死了,使用下面语句清理TimerHandle
+	//GetWorldTimerManager().ClearTimer(TimerHandle_BlackHoleAttack)
+}
+
+void ASCharacter::BlackHoleAttack_TimeElasped()
+{
+	SpawnProjectile((BlackHoleProjectileClass));
 }
 
 // Called to bind functionality to input
@@ -171,5 +191,7 @@ void ASCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 	
 	PlayerInputComponent->BindAction("PrimaryAttack",IE_Pressed,this,&ASCharacter::PrimaryAttack);
 	PlayerInputComponent->BindAction("PrimaryInteract",IE_Pressed,this,&ASCharacter::PrimaryInteract);
+
+	PlayerInputComponent->BindAction("BlackHoleAttack",IE_Pressed,this,&ASCharacter::BlackHoleAttack);
 }
 

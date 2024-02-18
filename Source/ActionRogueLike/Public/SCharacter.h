@@ -26,8 +26,13 @@ protected:
 	UPROPERTY(EditAnywhere,Category = "Attack")
 	UAnimMontage* AttackAnim;
 
+	UPROPERTY(EditAnywhere,Category = "Attack")
+	TSubclassOf<AActor> BlackHoleProjectileClass;
+
 	
 	FTimerHandle TimerHandle_PrimaryAttack;
+	FTimerHandle TimerHandle_BlackHoleAttack;
+
 
 
 public:
@@ -61,6 +66,8 @@ public:
 	void PrimaryAttack();
 	void PrimaryInteract();
 	void SpawnProjectile(TSubclassOf<AActor> ClassToSpawn);
+	void BlackHoleAttack();
+	void BlackHoleAttack_TimeElasped();
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
