@@ -5,6 +5,7 @@
 
 #include "Components/SphereComponent.h"
 #include "GameFramework/ProjectileMovementComponent.h"
+#include "Kismet/GameplayStatics.h"
 #include "Particles/ParticleSystemComponent.h"
 
 // Sets default values
@@ -35,6 +36,25 @@ void ASProjectileBase::BeginPlay()
 {
 	Super::BeginPlay();
 	
+}
+
+void ASProjectileBase::Explode_Implementation()
+{
+	// IsPendingKill确保对象有效，防止重复destroy
+	if (ensure(IsPendingKill()))
+	{
+		// 触发爆炸时的特效，特效样式在UE中设置ImpactVFX变量
+		UGameplayStatics::SpawnEmitterAtLocation(this, ImpactVFX, GetActorLocation(), GetActorRotation());
+ 
+		Destroy();
+	}
+	
+}
+
+void ASProjectileBase::OnActorHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
+	FVector NormalImpulse, const FHitResult& Hit)
+{
+	Explode();
 }
 
 // Called every frame

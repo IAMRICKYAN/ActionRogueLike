@@ -29,9 +29,13 @@ protected:
 	UPROPERTY(EditAnywhere,Category = "Attack")
 	TSubclassOf<AActor> BlackHoleProjectileClass;
 
+	UPROPERTY(EditAnywhere,Category="Attack")
+	TSubclassOf<AActor> DashProjectileClass;
+
 	
 	FTimerHandle TimerHandle_PrimaryAttack;
 	FTimerHandle TimerHandle_BlackHoleAttack;
+	FTimerHandle TimerHandle_DashAttack;
 
 
 
@@ -70,6 +74,8 @@ public:
 	void SpawnProjectile(TSubclassOf<AActor> ClassToSpawn);
 	void BlackHoleAttack();
 	void BlackHoleAttack_TimeElasped();
+	void DashAttack_TimeElasped();
+	void DashAttack();
 
 	
 	// Called to bind functionality to input

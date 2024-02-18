@@ -3,6 +3,7 @@
 
 #include "SCharacter.h"
 
+#include "SDashProjectile.h"
 #include "SInteractionComponent.h"
 #include "Chaos/ChaosPerfTest.h"
 #include "GameFramework/CharacterMovementComponent.h"
@@ -176,6 +177,24 @@ void ASCharacter::BlackHoleAttack()
 void ASCharacter::BlackHoleAttack_TimeElasped()
 {
 	SpawnProjectile((BlackHoleProjectileClass));
+	
+}
+
+
+
+void ASCharacter::DashAttack()
+{
+	PlayAnimMontage(AttackAnim);
+	GetWorldTimerManager().SetTimer(TimerHandle_DashAttack,this,&ASCharacter::DashAttack_TimeElasped,0.2f);
+
+	//如果我们的角色死了,使用下面语句清理TimerHandle
+	//GetWorldTimerManager().ClearTimer(TimerHandle_BlackHoleAttack)
+}
+
+void ASCharacter::DashAttack_TimeElasped()
+{
+	SpawnProjectile((DashProjectileClass));
+
 }
 
 // Called to bind functionality to input
@@ -195,5 +214,8 @@ void ASCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 	PlayerInputComponent->BindAction("PrimaryInteract",IE_Pressed,this,&ASCharacter::PrimaryInteract);
 
 	PlayerInputComponent->BindAction("BlackHoleAttack",IE_Pressed,this,&ASCharacter::BlackHoleAttack);
+
+	PlayerInputComponent->BindAction("DashAttack",IE_Pressed,this,&ASCharacter::DashAttack);
+
 }
 

@@ -32,6 +32,18 @@ protected:
 	UPROPERTY(BlueprintReadOnly,VisibleAnywhere)
 	UParticleSystemComponent* EffectComp;
 
+
+	UPROPERTY(EditDefaultsOnly, Category = "Effects")
+	UParticleSystem* ImpactVFX;//VFX指Visual effects, 即视觉特效，负责爆炸时的特效
+ 
+	UFUNCTION()
+	virtual void OnActorHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
+ 
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent)
+	void Explode(); // 爆炸函数
+
+
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
