@@ -51,6 +51,8 @@ protected:
 	USInteractionComponent* InteractionComp;
 
 	
+
+	
 	
 	
 	// Called when the game starts or when spawned
@@ -68,6 +70,8 @@ public:
 	void SpawnProjectile(TSubclassOf<AActor> ClassToSpawn);
 	void BlackHoleAttack();
 	void BlackHoleAttack_TimeElasped();
+
+	
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 

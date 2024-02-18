@@ -101,6 +101,8 @@ void ASCharacter::PrimaryAttack_TimeElasped()
 		
 }
 
+
+
 void ASCharacter::PrimaryInteract()
 {
 	if(InteractionComp)
