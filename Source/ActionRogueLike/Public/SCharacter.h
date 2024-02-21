@@ -9,6 +9,7 @@
 #include "SCharacter.generated.h"
 
 
+class USAttributeComponent;
 class USInteractionComponent;
 class UCameraComponent;
 class USpringArmComponent;
@@ -53,6 +54,9 @@ protected:
 
 	UPROPERTY(VisibleAnywhere)
 	USInteractionComponent* InteractionComp;
+
+	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category="Components")
+	USAttributeComponent* AttributeComp;
 
 	
 
