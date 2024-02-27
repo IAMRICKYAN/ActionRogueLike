@@ -17,10 +17,11 @@ USAttributeComponent::USAttributeComponent()
 
 
 
-bool USAttributeComponent::ApplyHealthChange(float delta)
+bool USAttributeComponent::ApplyHealthChange(float Delta)
 {
-	Health += delta;
+	Health += Delta;
 
+	OnHealthChanged.Broadcast(nullptr,this,Health,Delta);
 	return true;
 }
 
