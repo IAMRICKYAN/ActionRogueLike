@@ -26,12 +26,18 @@ protected:
 
 
 public:
+	
+	UFUNCTION(BlueprintCallable)
+	bool IsAlive() const;
 
+
+	
+	
 	UPROPERTY(BlueprintAssignable)
 	FOnHealthChanged OnHealthChanged;
 	
 	UFUNCTION(BlueprintCallable,Category="Attributes")
-	bool ApplyHealthChange(float delta);
+	bool ApplyHealthChange(float Delta);
 	
 	
 

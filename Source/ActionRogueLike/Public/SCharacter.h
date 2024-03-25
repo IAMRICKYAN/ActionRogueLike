@@ -81,6 +81,11 @@ public:
 	void DashAttack_TimeElasped();
 	void DashAttack();
 
+	UFUNCTION()
+	void OnHealthChanged(AActor* InstigatorActor, USAttributeComponent* OwningComp, float NewHealth,float Delta);
+
+	virtual void PostInitializeComponents() override;
+
 	
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
