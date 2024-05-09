@@ -10,7 +10,7 @@ USAttributeComponent::USAttributeComponent()
 	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
 
-	// ...
+	// ... 
 	Health = 100;
 }
 

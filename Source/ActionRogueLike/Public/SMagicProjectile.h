@@ -37,6 +37,9 @@ protected:
 
 	UPROPERTY(BlueprintReadOnly,VisibleAnywhere)
 	UParticleSystemComponent* EffectComp;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Damage")
+	float DamageAmount;
 	
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
