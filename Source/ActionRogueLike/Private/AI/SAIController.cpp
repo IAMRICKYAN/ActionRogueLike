@@ -12,7 +12,7 @@ void ASAIController::BeginPlay()
 
 	RunBehaviorTree(BehaviorTree);
 
-	APawn* MyPawn =  UGameplayStatics::GetPlayerPawn(this,0);
+	/*APawn* MyPawn =  UGameplayStatics::GetPlayerPawn(this,0);
 	if(MyPawn != nullptr)
 	{
 		//使AI移动至角色初始位置
@@ -22,5 +22,8 @@ void ASAIController::BeginPlay()
 		GetBlackboardComponent()->SetValueAsObject("TargetActor",MyPawn);
 
 		
-	}
+	}*/
+	//上面注释的代码已经不需要了
+
+	
 }
