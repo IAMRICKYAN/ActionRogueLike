@@ -89,9 +89,7 @@ void ASCharacter::PrimaryAttack()
 
 	//如果我们的角色死了,使用下面语句清理TimerHandle
 	//GetWorldTimerManager().ClearTimer(TimerHandle_PrimaryAttack);
-	
 
-    	
 }
 
 void ASCharacter::PrimaryAttack_TimeElasped()

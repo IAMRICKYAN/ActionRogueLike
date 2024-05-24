@@ -52,17 +52,5 @@ void ASExplosiveBarrel::OnActorHit(UPrimitiveComponent* HitComponent, AActor* Ot
 	DrawDebugString(GetWorld(),Hit.ImpactPoint,CombinedString,nullptr,FColor::Green,2.0f,true);
 }
 
-// Called when the game starts or when spawned
-void ASExplosiveBarrel::BeginPlay()
-{
-	Super::BeginPlay();
-	
-}
 
-// Called every frame
-void ASExplosiveBarrel::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
-}
 

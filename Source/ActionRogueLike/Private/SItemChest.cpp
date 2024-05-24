@@ -31,10 +31,3 @@ void ASItemChest::BeginPlay()
 	
 }
 
-// Called every frame
-void ASItemChest::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
-}
-
