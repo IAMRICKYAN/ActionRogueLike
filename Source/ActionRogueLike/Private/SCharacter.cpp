@@ -27,6 +27,7 @@ ASCharacter::ASCharacter()
 	AttributeComp = CreateDefaultSubobject<USAttributeComponent>("AttributeComp");
 
 
+
 	GetCharacterMovement()->bOrientRotationToMovement = true;
 	
 	bUseControllerRotationYaw = false;
@@ -201,11 +202,25 @@ void ASCharacter::DashAttack()
 void ASCharacter::OnHealthChanged(AActor* InstigatorActor, USAttributeComponent* OwningComp, float NewHealth,
 	float Delta)
 {
+	//Die
 	if(NewHealth <= 0.0f && Delta <0.0f)
 	{
 		APlayerController* PC = Cast<APlayerController>(GetController());
 		DisableInput(PC);
 	}
+
+	// Damaged
+	/*if (Delta < 0.0f)
+	{
+		//GetMesh()->SetScalarParameterValueOnMaterials(TimeToHitParamName, GetWorld()->TimeSeconds);
+
+		// Replaces the above "old" method of requiring unique material instances for every mesh element on the player 
+		GetMesh()->SetCustomPrimitiveDataFloat(HitFlash_CustomPrimitiveIndex, GetWorld()->TimeSeconds);
+
+		// Rage added equal to damage received (Abs to turn into positive rage number)
+		const float RageDelta = FMath::Abs(Delta);
+		AttributeComp->ApplyRage(InstigatorActor, RageDelta);
+	}*/
 }
 
 

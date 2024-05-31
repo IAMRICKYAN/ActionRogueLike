@@ -58,6 +58,9 @@ protected:
 	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category="Components")
 	USAttributeComponent* AttributeComp;
 
+
+	
+
 	
 
 	
