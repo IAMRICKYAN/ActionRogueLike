@@ -15,7 +15,6 @@ class ACTIONROGUELIKE_API USAttributeComponent : public UActorComponent
 	GENERATED_BODY()
 
 public:	
-	// Sets default values for this component's properties
 	USAttributeComponent();
 
 protected:
@@ -33,6 +32,12 @@ public:
 	UFUNCTION(BlueprintCallable)
 	bool IsAlive() const;
 
+	UFUNCTION(BlueprintCallable)
+	bool IsFullHealth() const;
+
+	UFUNCTION(BlueprintCallable)
+	float GetHealthMax() const;
+	
 	
 	UPROPERTY(BlueprintAssignable)
 	FOnHealthChanged OnHealthChanged;
