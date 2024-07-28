@@ -4,28 +4,28 @@
 
 #include "CoreMinimal.h"
 #include "BehaviorTree/BTService.h"
-#include "SBTService_CheckAttackRange.generated.h"
+#include "SBTService_CheckHealth.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class ACTIONROGUELIKE_API USBTService_CheckAttackRange : public UBTService
+class ACTIONROGUELIKE_API USBTService_CheckHealth : public UBTService
 {
 	GENERATED_BODY()
 
+
 protected:
-
 	UPROPERTY(EditAnywhere,Category="AI")
-	FBlackboardKeySelector AttackRangeKey;
+	FBlackboardKeySelector LowHealthKey;
 
-	/* Max desired attack range of AI pawn */
-	UPROPERTY(EditAnywhere, Category = "AI")
-	float MaxAttackRange;
-	
+
+	UPROPERTY(EditAnywhere, Category = "AI", meta = (ClampMin="0.0", ClampMax="1.0"))
+	float LowHealthFraction;
+
 	virtual void TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds) override;
 
 
 public:
-	USBTService_CheckAttackRange();
+	USBTService_CheckHealth();
 };

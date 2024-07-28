@@ -29,6 +29,20 @@ float USAttributeComponent::GetHealthMax() const
 	return HealthMax;
 }
 
+float USAttributeComponent::GetHealth() const
+{
+	return Health;
+}
+
+USAttributeComponent* USAttributeComponent::GetAttributes(AActor* FromActor)
+{
+	if (FromActor)
+	{
+		return Cast<USAttributeComponent>(FromActor->GetComponentByClass(USAttributeComponent::StaticClass()));
+	}
+
+	return nullptr;
+}
 
 bool USAttributeComponent::ApplyHealthChange(float Delta)
 {

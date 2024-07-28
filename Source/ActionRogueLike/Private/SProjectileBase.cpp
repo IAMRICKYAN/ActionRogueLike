@@ -3,10 +3,12 @@
 
 #include "SProjectileBase.h"
 
+#include "Components/AudioComponent.h"
 #include "Components/SphereComponent.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "Particles/ParticleSystemComponent.h"
+#include "Sound/SoundCue.h"
 
 // Sets default values
 ASProjectileBase::ASProjectileBase()
@@ -27,7 +29,11 @@ ASProjectileBase::ASProjectileBase()
 	EffectComp = CreateDefaultSubobject<UParticleSystemComponent>("EffectComp");
 	EffectComp->SetupAttachment(RootComponent);
 
+	AudioComp = CreateDefaultSubobject<UAudioComponent>("AudioComp");
+	AudioComp->SetupAttachment(RootComponent);
 
+	ImpactShakeInnerRadius = 250.f;
+	ImpactShakeOuterRadius = 2500.f;
 
 }
 
@@ -45,6 +51,9 @@ void ASProjectileBase::Explode_Implementation()
 	{
 		// 触发爆炸时的特效，特效样式在UE中设置ImpactVFX变量
 		UGameplayStatics::SpawnEmitterAtLocation(this, ImpactVFX, GetActorLocation(), GetActorRotation());
+
+		UGameplayStatics::PlaySoundAtLocation(this,ImpactSound,GetActorLocation());
+		UGameplayStatics::PlayWorldCameraShake(this,ImpactShake,GetActorLocation(),ImpactShakeInnerRadius,ImpactShakeOuterRadius);
  
 		Destroy();
 	}

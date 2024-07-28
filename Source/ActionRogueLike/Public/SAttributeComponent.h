@@ -27,6 +27,7 @@ protected:
 
 
 
+
 public:
 	
 	UFUNCTION(BlueprintCallable)
@@ -37,7 +38,12 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	float GetHealthMax() const;
-	
+
+	UFUNCTION(BlueprintCallable)
+	float GetHealth() const;
+
+	UFUNCTION(BlueprintCallable, Category = "Attributes")
+	static USAttributeComponent* GetAttributes(AActor* FromActor);
 	
 	UPROPERTY(BlueprintAssignable)
 	FOnHealthChanged OnHealthChanged;

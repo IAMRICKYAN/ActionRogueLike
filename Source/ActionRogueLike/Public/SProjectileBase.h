@@ -9,6 +9,7 @@
 class USphereComponent;
 class UProjectileMovementComponent;
 class UParticleSystemComponent;
+class UCameraShakeBase;
 
 UCLASS()
 class ACTIONROGUELIKE_API ASProjectileBase : public AActor
@@ -33,8 +34,24 @@ protected:
 	UParticleSystemComponent* EffectComp;
 
 
+	UPROPERTY(EditDefaultsOnly, Category = "Effects|Shake")
+	TSubclassOf<UCameraShakeBase> ImpactShake;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Effects|Shake")
+	float ImpactShakeInnerRadius;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Effects|Shake")
+	float ImpactShakeOuterRadius;
+
+	
 	UPROPERTY(EditDefaultsOnly, Category = "Effects")
 	UParticleSystem* ImpactVFX;//VFX指Visual effects, 即视觉特效，负责爆炸时的特效
+
+	UPROPERTY(EditDefaultsOnly,Category="Effects")
+	USoundCue* ImpactSound;
+
+	UPROPERTY(VisibleAnywhere,Category=Components)
+	UAudioComponent* AudioComp;
  
 	UFUNCTION()
 	virtual void OnActorHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
