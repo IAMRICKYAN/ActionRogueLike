@@ -60,6 +60,8 @@ void ASGameModeBase::OnQueryCompleted(UEnvQueryInstanceBlueprintWrapper* QueryIn
 		}
 	}
 
+	UE_LOG(LogTemp,Log,TEXT("Found %i alive Bots"),NrOfAliveBots);
+
 	float MaxBotCount = 10.0f;
 
 	if (DifficultyCurve)
@@ -70,6 +72,7 @@ void ASGameModeBase::OnQueryCompleted(UEnvQueryInstanceBlueprintWrapper* QueryIn
 
 	if (NrOfAliveBots >= MaxBotCount)
 	{
+		UE_LOG(LogTemp,Log,TEXT("At maximum bot capacity.Skipping bot spawn"));
 		return;
 	}
 
@@ -81,5 +84,7 @@ void ASGameModeBase::OnQueryCompleted(UEnvQueryInstanceBlueprintWrapper* QueryIn
 	{
 
 		GetWorld()->SpawnActor<AActor>(MinionClass, Locations[0], FRotator::ZeroRotator);
+
+		DrawDebugSphere(GetWorld(),Locations[0],50.0f,20,FColor::Blue,false,60.0f);
 	}
 }
