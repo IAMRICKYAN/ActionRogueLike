@@ -23,6 +23,15 @@ ASAICharacter::ASAICharacter()
 	
 }
 
+void ASAICharacter::SetTargetActor(AActor* NewTarget)
+{
+	AAIController* AIC = Cast<AAIController>(GetController());
+	if(AIC)
+	{
+		AIC->GetBlackboardComponent()->SetValueAsObject("TargetActor",NewTarget);
+	}
+}
+
 void ASAICharacter::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
@@ -34,17 +43,10 @@ void ASAICharacter::PostInitializeComponents()
 
 void ASAICharacter::OnPawnSeen(APawn* Pawn)
 {
-	AAIController* AIC = Cast<AAIController>(GetController());
-	if(AIC)
-	{
-		UBlackboardComponent* BBComp =  AIC->GetBlackboardComponent();
+	SetTargetActor(Pawn);
 
-		BBComp->SetValueAsObject("TargetActor",Pawn);
-
-		DrawDebugString(GetWorld(),GetActorLocation(),"PlayerSpotted",nullptr,FColor::White,4.0f,true);
-
-		
-	}
+	DrawDebugString(GetWorld(),GetActorLocation(),"PlayerSpotted",nullptr,FColor::White,4.0f,true);
+	
 }
 
 void ASAICharacter::OnHealthChanged(AActor* InstigatorActor, USAttributeComponent* OwningComp, float NewHealth,
@@ -52,7 +54,10 @@ void ASAICharacter::OnHealthChanged(AActor* InstigatorActor, USAttributeComponen
 {
 	if(Delta <0.0f)
 	{
-
+		if(InstigatorActor != this)
+		{
+			SetTargetActor(InstigatorActor);
+		}
 
 		if(NewHealth <= 0.0f)
 		{

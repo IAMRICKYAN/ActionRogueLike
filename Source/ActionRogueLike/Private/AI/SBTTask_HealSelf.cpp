@@ -17,7 +17,7 @@ EBTNodeResult::Type USBTTask_HealSelf::ExecuteTask(UBehaviorTreeComponent& Owner
 	USAttributeComponent* AttributeComp = USAttributeComponent::GetAttributes(MyPawn);
 	if(ensure((AttributeComp)))
 	{
-		AttributeComp->ApplyHealthChange((MyPawn,AttributeComp->GetHealthMax()));
+		AttributeComp->ApplyHealthChange(MyPawn,AttributeComp->GetHealthMax());
 	}
 	
 

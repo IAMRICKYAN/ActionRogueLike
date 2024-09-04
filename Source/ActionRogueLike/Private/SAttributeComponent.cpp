@@ -44,7 +44,18 @@ USAttributeComponent* USAttributeComponent::GetAttributes(AActor* FromActor)
 	return nullptr;
 }
 
-bool USAttributeComponent::ApplyHealthChange(float Delta)
+bool USAttributeComponent::IsActorAlive(AActor* Actor)
+{
+	 USAttributeComponent* AttributeComp = GetAttributes((Actor));
+	if(AttributeComp)
+	{
+		return AttributeComp->IsAlive();
+	}
+
+	return false;
+}
+
+bool USAttributeComponent::ApplyHealthChange(AActor* InstigatorActor,float Delta)
 {
 
 	float OldHealth = Health;
@@ -52,9 +63,9 @@ bool USAttributeComponent::ApplyHealthChange(float Delta)
 	Health = FMath::Clamp(Health+Delta,0.0f,HealthMax);
 
 	float ActualDelta = Health - OldHealth;
-	OnHealthChanged.Broadcast(nullptr,this,Health,ActualDelta);
+	OnHealthChanged.Broadcast(InstigatorActor,this,Health,ActualDelta);
 	return ActualDelta != 0;
 }
-
+ 
 
 
