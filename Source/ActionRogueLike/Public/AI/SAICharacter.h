@@ -18,8 +18,13 @@ class ACTIONROGUELIKE_API ASAICharacter : public ACharacter
 public:
 	ASAICharacter();
 
+
 protected:
 
+	UPROPERTY(VisibleAnywhere,Category="Effects")
+	FName TimeToHitParamName;
+
+	
 	void SetTargetActor(AActor* NewTarget);
 	
 

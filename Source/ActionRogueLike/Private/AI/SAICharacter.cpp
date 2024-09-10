@@ -20,6 +20,8 @@ ASAICharacter::ASAICharacter()
 	
 	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
 
+	TimeToHitParamName = "TimeOfHit";
+
 	
 }
 
@@ -58,6 +60,8 @@ void ASAICharacter::OnHealthChanged(AActor* InstigatorActor, USAttributeComponen
 		{
 			SetTargetActor(InstigatorActor);
 		}
+
+		GetMesh()->SetScalarParameterValueOnMaterials(TimeToHitParamName, GetWorld()->TimeSeconds);
 
 		if(NewHealth <= 0.0f)
 		{
