@@ -36,6 +36,11 @@ ASCharacter::ASCharacter()
 
 }
 
+void ASCharacter::HealSelf(float Amount)
+{
+	AttributeComp->ApplyHealthChange(this,Amount);
+}
+
 void ASCharacter::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();

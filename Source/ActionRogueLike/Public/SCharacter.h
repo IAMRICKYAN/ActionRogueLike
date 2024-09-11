@@ -44,6 +44,9 @@ public:
 	// Sets default values for this character's properties
 	ASCharacter();
 
+	UFUNCTION(Exec)
+	void HealSelf(float Amount = 100);
+
 protected:
 
 	UPROPERTY(VisibleAnywhere)
@@ -58,14 +61,6 @@ protected:
 	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category="Components")
 	USAttributeComponent* AttributeComp;
 
-
-	
-
-	
-
-	
-	
-	
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
@@ -93,4 +88,7 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+
+	
+	
 };
