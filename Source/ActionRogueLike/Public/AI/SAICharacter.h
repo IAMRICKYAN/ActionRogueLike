@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "SWorldUserWidget.h"
 #include "GameFramework/Character.h"
 #include "SAICharacter.generated.h"
 
@@ -20,6 +21,13 @@ public:
 
 
 protected:
+
+	
+	USWorldUserWidget* ActiveHealthBar;
+ 
+	UPROPERTY(EditDefaultsOnly,Category="UI")
+	TSubclassOf<UUserWidget> HealthBarWidgetClass;
+
 
 	UPROPERTY(VisibleAnywhere,Category="Effects")
 	FName TimeToHitParamName;
