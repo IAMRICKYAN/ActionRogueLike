@@ -19,20 +19,6 @@ void USBTService_CheckAttackRange::TickNode(UBehaviorTreeComponent& OwnerComp, u
 		if(TargetActor)
 		{
 			AAIController* MyController =  OwnerComp.GetAIOwner();
-			/*if(ensure(MyController))
-			{
-				APawn* AIPawn =  MyController->GetPawn();
-				if(ensure(AIPawn))
-				{
-					float DistanceTo = FVector::Distance(TargetActor->GetActorLocation(),AIPawn->GetActorLocation());
-
-					bool bWithinRange = DistanceTo < 2000.0f;
-
-					bool bHasLOS = false;
-					if(bWithinRange)
-					{
-						bHasLOS =  MyController->LineOfSightTo(TargetActor);
-					}*/
 
 			APawn* AIPawn = MyController->GetPawn();
 			if (ensure(AIPawn))
@@ -40,11 +26,7 @@ void USBTService_CheckAttackRange::TickNode(UBehaviorTreeComponent& OwnerComp, u
 				float DistanceTo = FVector::Distance(TargetActor->GetActorLocation(), AIPawn->GetActorLocation());
 
 				bool bWithinRange = DistanceTo < MaxAttackRange;
-					
-
-					/*
-					BlackboardComp->SetValueAsBool(AttackRangeKey.SelectedKeyName,(bWithinRange && bHasLOS));
-					*/
+				
 				bool bHasLOS = false;
 				if (bWithinRange)
 				{
