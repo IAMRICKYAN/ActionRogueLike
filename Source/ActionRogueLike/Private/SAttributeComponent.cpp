@@ -3,6 +3,8 @@
 
 #include "SAttributeComponent.h"
 
+#include "SGameModeBase.h"
+
 USAttributeComponent::USAttributeComponent()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
@@ -74,6 +76,16 @@ bool USAttributeComponent::ApplyHealthChange(AActor* InstigatorActor,float Delta
 
 	float ActualDelta = Health - OldHealth;
 	OnHealthChanged.Broadcast(InstigatorActor,this,Health,ActualDelta);
+
+	//Died
+	if(Delta <0.0f && Health == 0.0f)
+	{
+		ASGameModeBase* GM = GetWorld()->GetAuthGameMode<ASGameModeBase>();
+		if(GM)
+		{
+			GM->OnActorKilled(GetOwner(),InstigatorActor);
+		}
+	}
 	return ActualDelta != 0;
 }
  
