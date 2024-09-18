@@ -3,6 +3,7 @@
 
 #include "SCharacter.h"
 
+#include "SActionComponent.h"
 #include "SAttributeComponent.h"
 #include "SDashProjectile.h"
 #include "SInteractionComponent.h"
@@ -26,7 +27,7 @@ ASCharacter::ASCharacter()
 
 	AttributeComp = CreateDefaultSubobject<USAttributeComponent>("AttributeComp");
 
-
+	ActionComp = CreateDefaultSubobject<USActionComponent>("ActionComp");
 
 	GetCharacterMovement()->bOrientRotationToMovement = true;
 	
@@ -89,6 +90,15 @@ void ASCharacter::MoveRight(float value)
 	AddMovementInput(RightVector,value);
 }
 
+void ASCharacter::SprintStart()
+{
+	ActionComp->StartActionByName(this,"Sprint");
+}
+
+void ASCharacter::SprintStop()
+{
+	ActionComp->StopActionByName(this,"Sprint");
+}
 
 
 void ASCharacter::PrimaryAttack()
@@ -260,6 +270,9 @@ void ASCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 	PlayerInputComponent->BindAction("BlackHoleAttack",IE_Pressed,this,&ASCharacter::BlackHoleAttack);
 
 	PlayerInputComponent->BindAction("DashAttack",IE_Pressed,this,&ASCharacter::DashAttack);
+
+	PlayerInputComponent->BindAction("Sprint",IE_Pressed,this,&ASCharacter::SprintStart);
+	PlayerInputComponent->BindAction("Sprint",IE_Released,this,&ASCharacter::SprintStop);
 
 }
 

@@ -9,6 +9,7 @@
 #include "SCharacter.generated.h"
 
 
+class USActionComponent;
 class USAttributeComponent;
 class USInteractionComponent;
 class UCameraComponent;
@@ -61,6 +62,9 @@ protected:
 	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category="Components")
 	USAttributeComponent* AttributeComp;
 
+	UPROPERTY(VisibleAnywhere,BlueprintReadOnly,Category="Components")
+	USActionComponent* ActionComp;
+
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
@@ -70,6 +74,8 @@ public:
 
 	void MoveForward(float value);
 	void MoveRight(float value);
+	void SprintStart();
+	void SprintStop();
 	void PrimaryAttack_TimeElasped();
 	void PrimaryAttack();
 	void PrimaryInteract();

@@ -75,6 +75,7 @@ void ASAICharacter::OnHealthChanged(AActor* InstigatorActor, USAttributeComponen
 			{
 				ActiveHealthBar->AttachedActor = this;
 				ActiveHealthBar->AddToViewport();
+				
 			}
 		}
 		
