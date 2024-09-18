@@ -33,6 +33,7 @@ ASCharacter::ASCharacter()
 	
 	bUseControllerRotationYaw = false;
 
+	TimeToHitParamName = "TimeToHit";
 	
 
 }
@@ -102,35 +103,20 @@ void ASCharacter::SprintStop()
 
 
 void ASCharacter::PrimaryAttack()
+{	
+	ActionComp->StartActionByName(this, "PrimaryAttack");
+}
+
+void ASCharacter::BlackHoleAttack()
 {
 	
-	PlayAnimMontage(AttackAnim);
-
-	GetWorldTimerManager().SetTimer(TimerHandle_PrimaryAttack,this,&ASCharacter::PrimaryAttack_TimeElasped,0.2f);
-
-	//如果我们的角色死了,使用下面语句清理TimerHandle
-	//GetWorldTimerManager().ClearTimer(TimerHandle_PrimaryAttack);
-
+	ActionComp->StartActionByName(this, "Blackhole");
 }
 
-void ASCharacter::PrimaryAttack_TimeElasped()
+void ASCharacter::DashAttack()
 {
-		/*FVector HandLocation = GetMesh()->GetSocketLocation("Muzzle_01");
-
-    	FTransform SpawnTM = FTransform(GetControlRotation(),HandLocation);
-    
-    	FActorSpawnParameters SpawnParams;
-    	SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-		SpawnParams.Instigator = this;
-    	
-    	GetWorld()->SpawnActor<AActor>(ProjectileClass,SpawnTM,SpawnParams);*/
-
-		SpawnProjectile(ProjectileClass);
- 	
-		
+	ActionComp->StartActionByName(this, "Dash");
 }
-
-
 
 void ASCharacter::PrimaryInteract()
 {
@@ -141,83 +127,6 @@ void ASCharacter::PrimaryInteract()
 	
 }
 
-void ASCharacter::SpawnProjectile(TSubclassOf<AActor> ClassToSpawn)
-{
-	if(ensure(ClassToSpawn))
-	{
-		// 获取模型右手位置
-		FVector RightHandLoc = GetMesh()->GetSocketLocation("Muzzle_01");
- 	
-		// 检测距离为 5000 cm = 50 m
-		FVector TraceStart = CameraComp->GetComponentLocation();
-		FVector TraceEnd = TraceStart + ( GetControlRotation().Vector() * 5000 );
- 	
-		// 检测半径
-		FCollisionShape Shape;
-		Shape.SetSphere(20.0f);
- 	
-		// 不要检测自己角色
-		FCollisionQueryParams Params;
-		Params.AddIgnoredActor(this);
- 	
-		// 碰撞设置
-		FCollisionObjectQueryParams ObjParams;
-		ObjParams.AddObjectTypesToQuery(ECC_WorldStatic);
-		ObjParams.AddObjectTypesToQuery(ECC_WorldDynamic);
-		ObjParams.AddObjectTypesToQuery(ECC_Pawn);
- 	
-		FHitResult Hit;
-		if (GetWorld()->SweepSingleByObjectType(Hit, TraceStart, TraceEnd, FQuat::Identity, ObjParams, Shape, Params)) {
-			TraceEnd = Hit.ImpactPoint;
-		}
-			
-		// 尾向量 - 头向量 = 方向向量 eg：起点(0,0) 终点(1,1)，方向向量为(1,1)
-		FRotator ProjRotation = FRotationMatrix::MakeFromX(TraceEnd - RightHandLoc).Rotator();
-		// 朝向检测到的落点方向，在角色的右手位置生成
-		FTransform SpawnTM = FTransform(ProjRotation, RightHandLoc);
- 	
-		// 此处设置碰撞检测规则为：即使碰撞也总是生成
-		FActorSpawnParameters SpawnParams;
-		SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-		SpawnParams.Instigator = this;
-
-		/*
-		GetWorld()->SpawnActor<AActor>(ProjectileClass, SpawnTM, SpawnParams);
-		*/
-
-		GetWorld()->SpawnActor<AActor>(ClassToSpawn,SpawnTM,SpawnParams);
-	}
-
-	
-}
-
-void ASCharacter::BlackHoleAttack()
-{
-	
-	PlayAnimMontage(AttackAnim);
-
-	GetWorldTimerManager().SetTimer(TimerHandle_BlackHoleAttack,this,&ASCharacter::BlackHoleAttack_TimeElasped,0.2f);
-
-	//如果我们的角色死了,使用下面语句清理TimerHandle
-	//GetWorldTimerManager().ClearTimer(TimerHandle_BlackHoleAttack)
-}
-
-void ASCharacter::BlackHoleAttack_TimeElasped()
-{
-	SpawnProjectile((BlackHoleProjectileClass));
-	
-}
-
-
-
-void ASCharacter::DashAttack()
-{
-	PlayAnimMontage(AttackAnim);
-	GetWorldTimerManager().SetTimer(TimerHandle_DashAttack,this,&ASCharacter::DashAttack_TimeElasped,0.2f);
-
-	//如果我们的角色死了,使用下面语句清理TimerHandle
-	//GetWorldTimerManager().ClearTimer(TimerHandle_BlackHoleAttack)
-}
 
 void ASCharacter::OnHealthChanged(AActor* InstigatorActor, USAttributeComponent* OwningComp, float NewHealth,
 	float Delta)
@@ -230,26 +139,15 @@ void ASCharacter::OnHealthChanged(AActor* InstigatorActor, USAttributeComponent*
 	}
 
 	// Damaged
-	/*if (Delta < 0.0f)
+	if (Delta < 0.0f)
 	{
-		//GetMesh()->SetScalarParameterValueOnMaterials(TimeToHitParamName, GetWorld()->TimeSeconds);
-
-		// Replaces the above "old" method of requiring unique material instances for every mesh element on the player 
-		GetMesh()->SetCustomPrimitiveDataFloat(HitFlash_CustomPrimitiveIndex, GetWorld()->TimeSeconds);
-
-		// Rage added equal to damage received (Abs to turn into positive rage number)
-		const float RageDelta = FMath::Abs(Delta);
-		AttributeComp->ApplyRage(InstigatorActor, RageDelta);
-	}*/
+		GetMesh()->SetScalarParameterValueOnMaterials(TimeToHitParamName, GetWorld()->TimeSeconds);
+	}
 }
 
 
 
-void ASCharacter::DashAttack_TimeElasped()
-{
-	SpawnProjectile((DashProjectileClass));
 
-}
 
 // Called to bind functionality to input
 void ASCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)

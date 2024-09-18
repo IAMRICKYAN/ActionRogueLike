@@ -30,6 +30,9 @@ public:
 	USActionComponent();
 
 protected:
+	/* Granted abilities at game start */
+	UPROPERTY(EditAnywhere, Category = "Actions")
+	TArray<TSubclassOf<USAction>> DefaultActions;
 
 	UPROPERTY()
 	TArray<USAction*> Actions;

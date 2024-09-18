@@ -24,7 +24,7 @@ ASAICharacter::ASAICharacter()
 	
 	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
 
-	TimeToHitParamName = "TimeOfHit";
+	TimeToHitParamName = "TimeToHit";
 
 	GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_WorldDynamic,ECR_Ignore);
 	GetMesh()->SetGenerateOverlapEvents(true);

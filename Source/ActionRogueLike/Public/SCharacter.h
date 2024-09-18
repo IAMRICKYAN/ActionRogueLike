@@ -19,36 +19,17 @@ class UAnimMontage;
 UCLASS()
 class ACTIONROGUELIKE_API ASCharacter : public ACharacter
 {
-	GENERATED_BODY()
-
-protected:
-	UPROPERTY(EditAnywhere,Category = "Attack")
-	TSubclassOf<AActor> ProjectileClass;
-
-	UPROPERTY(EditAnywhere,Category = "Attack")
-	UAnimMontage* AttackAnim;
-
-	UPROPERTY(EditAnywhere,Category = "Attack")
-	TSubclassOf<AActor> BlackHoleProjectileClass;
-
-	UPROPERTY(EditAnywhere,Category="Attack")
-	TSubclassOf<AActor> DashProjectileClass;
-
-	
-	FTimerHandle TimerHandle_PrimaryAttack;
-	FTimerHandle TimerHandle_BlackHoleAttack;
-	FTimerHandle TimerHandle_DashAttack;
-
-
-
+	GENERATED_BODY() 
 public:
-	// Sets default values for this character's properties
 	ASCharacter();
 
 	UFUNCTION(Exec)
 	void HealSelf(float Amount = 100);
 
 protected:
+
+	UPROPERTY(VisibleAnywhere,Category="Effects")
+	FName TimeToHitParamName;
 
 	UPROPERTY(VisibleAnywhere)
 	UCameraComponent* CameraComp;
@@ -73,16 +54,19 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	void MoveForward(float value);
+	
 	void MoveRight(float value);
+	
 	void SprintStart();
+	
 	void SprintStop();
-	void PrimaryAttack_TimeElasped();
+	
 	void PrimaryAttack();
+	
 	void PrimaryInteract();
-	void SpawnProjectile(TSubclassOf<AActor> ClassToSpawn);
+	
 	void BlackHoleAttack();
-	void BlackHoleAttack_TimeElasped();
-	void DashAttack_TimeElasped();
+	
 	void DashAttack();
 
 	UFUNCTION()
