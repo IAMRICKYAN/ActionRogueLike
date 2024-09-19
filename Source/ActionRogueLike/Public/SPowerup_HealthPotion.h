@@ -21,7 +21,8 @@ protected:
 	UPROPERTY(VisibleAnywhere, Category = "Components")
 	UStaticMeshComponent* MeshComp;
 
-	// float healt amount?
+	UPROPERTY(EditAnywhere, Category = "HealthPotion")
+	int32 CreditCost;
 
 public:
 
