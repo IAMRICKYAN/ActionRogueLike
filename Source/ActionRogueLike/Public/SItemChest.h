@@ -33,7 +33,16 @@ protected:
 
 	UPROPERTY(VisibleAnywhere,BlueprintReadOnly)
 	UStaticMeshComponent* LidMesh;
+
+	UPROPERTY(ReplicatedUsing="OnRep_LidOpened", BlueprintReadOnly) // RepNotify
+	bool bLidOpened;
+
+	UFUNCTION()
+	void OnRep_LidOpened();
+	
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
+	
 	
 };
