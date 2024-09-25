@@ -24,10 +24,10 @@ public:
 	USAttributeComponent();
 
 protected:
-	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly,Category="Attributes")
+	UPROPERTY(EditDefaultsOnly,BlueprintReadOnly,Replicated,Category="Attributes")
 	float Health;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Attributes")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly,Replicated, Category = "Attributes")
 	float HealthMax;
 
 
@@ -40,6 +40,9 @@ public:
 	
 	UFUNCTION(BlueprintCallable)
 	bool IsAlive() const;
+	
+	UFUNCTION(NetMulticast, Reliable) // @FIXME: mark as unreliable once we moved the 'state' our of scharacter
+	void MulticastHealthChanged(AActor* InstigatorActor, float NewHealth, float Delta);
 
 	UFUNCTION(BlueprintCallable)
 	bool IsFullHealth() const;
