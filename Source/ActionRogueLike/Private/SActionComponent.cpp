@@ -9,7 +9,10 @@ USActionComponent::USActionComponent()
 {
 	PrimaryComponentTick.bCanEverTick = true;
 
+	SetIsReplicatedByDefault(true);
+
 }
+
 
 
 void USActionComponent::BeginPlay()
@@ -63,6 +66,12 @@ bool USActionComponent::StartActionByName(AActor* Instigator, FName ActionName)
 				GEngine->AddOnScreenDebugMessage(-1, 2.0f, FColor::Red, FailedMsg);
 				continue;
 			}
+
+			// Is Client?
+			if (!GetOwner()->HasAuthority())
+			{
+				ServerStartAction(Instigator, ActionName);
+			}
 			
 			Action->StartAction(Instigator);
 			return true;
@@ -97,4 +106,9 @@ void USActionComponent::RemoveAction(USAction* ActionToRemove)
 	}
 
 	Actions.Remove(ActionToRemove);
+}
+
+void USActionComponent::ServerStartAction_Implementation(AActor* Instigator, FName ActionName)
+{
+	StartActionByName(Instigator,ActionName);
 }
