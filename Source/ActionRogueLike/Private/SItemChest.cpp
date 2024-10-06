@@ -37,6 +37,12 @@ void ASItemChest::Interact_Implementation(APawn* InstigatorPawn)
 	OnRep_LidOpened();
 }
 
+void ASItemChest::OnActorLoaded_Implementation()
+{
+	ISGameplayInterface::OnActorLoaded_Implementation();
+	OnRep_LidOpened();
+}
+
 
 void ASItemChest::OnRep_LidOpened()
 {
