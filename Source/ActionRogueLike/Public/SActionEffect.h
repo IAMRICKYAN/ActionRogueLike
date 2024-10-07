@@ -20,6 +20,8 @@ public:
 
 	void StopAction_Implementation(AActor* Instigator) override;
 
+	
+
 protected:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Effect")
@@ -36,6 +38,8 @@ protected:
 	void ExecutePeriodicEffect(AActor* Instigator);
 
 public:
-
+	UFUNCTION(BlueprintCallable, Category = "Action")
+	float GetTimeRemaining() const;
+	
 	USActionEffect();
 };

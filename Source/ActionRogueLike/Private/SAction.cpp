@@ -31,6 +31,13 @@ void USAction::StartAction_Implementation(AActor* Instigator)
 	Comp->ActiveGameplayTags.AppendTags(GrantsTags);
 
 	bIsRunning = true;
+
+	if (GetOwningComponent()->GetOwnerRole() == ROLE_Authority)
+	{
+		TimeStarted = GetWorld()->TimeSeconds;
+	}
+
+	GetOwningComponent()->OnActionStarted.Broadcast(GetOwningComponent(), this);
 	
 }
 
@@ -44,6 +51,8 @@ void USAction::StopAction_Implementation(AActor* Instigator)
 	Comp->ActiveGameplayTags.RemoveTags(GrantsTags);
 
 	bIsRunning = false;
+
+	GetOwningComponent()->OnActionStopped.Broadcast(GetOwningComponent(), this);
 }
 
 

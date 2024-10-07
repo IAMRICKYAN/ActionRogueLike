@@ -8,6 +8,9 @@
 #include "SActionComponent.generated.h"
 
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnActionStateChanged, USActionComponent*, OwningComp, USAction*, Action);
+
+
 class USAction;
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
@@ -36,6 +39,12 @@ public:
 	UFUNCTION(BlueprintCallable,Category="Actions")
 	bool StopActionByName(AActor* Instigator,FName ActionName);
 
+	UPROPERTY(BlueprintAssignable)
+	FOnActionStateChanged OnActionStarted;
+
+	UPROPERTY(BlueprintAssignable)
+	FOnActionStateChanged OnActionStopped;
+
 
 	
 	USActionComponent();
@@ -45,7 +54,7 @@ protected:
 	UPROPERTY(EditAnywhere, Category = "Actions")
 	TArray<TSubclassOf<USAction>> DefaultActions;
 
-	UPROPERTY()
+	UPROPERTY(BlueprintReadOnly)
 	TArray<USAction*> Actions;
 
 	UFUNCTION(Server, Reliable)
